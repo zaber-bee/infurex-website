@@ -92,44 +92,60 @@ export function About() {
         >
           <motion.span 
             className="text-gold tracking-wider text-sm mb-4 block"
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, x: -100, rotate: -10 }}
             animate={inView ? { 
-              opacity: [0.7, 1, 0.7],
-              scale: 1 
+              opacity: 1,
+              x: 0,
+              rotate: 0
             } : {}}
             transition={{
-              opacity: { duration: 3, repeat: Infinity },
-              scale: { duration: 0.5 }
+              duration: 0.8,
+              type: "spring",
+              bounce: 0.4
             }}
           >
             ABOUT INFUREX
           </motion.span>
           <motion.h2 
             className="text-white mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.span
-              animate={inView ? {
-                backgroundPosition: ['0%', '100%', '0%']
-              } : {}}
-              transition={{ duration: 5, repeat: Infinity }}
-              style={{
-                backgroundImage: 'linear-gradient(90deg, #ffffff 0%, #D4A574 50%, #ffffff 100%)',
-                backgroundSize: '200% auto',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-              }}
-            >
-              Your Partner in Real Estate Digital Excellence
-            </motion.span>
+            {/* Animate each word separately */}
+            {["Your", "Partner", "in", "Real", "Estate", "Digital", "Excellence"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="inline-block mr-3"
+                initial={{ opacity: 0, y: 50, rotateX: 90 }}
+                animate={inView ? { 
+                  opacity: 1, 
+                  y: 0,
+                  rotateX: 0
+                } : {}}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: 0.2 + i * 0.08,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                style={{
+                  backgroundImage: i === 4 || i === 5 ? 'linear-gradient(90deg, #D4A574 0%, #E8C4A0 50%, #D4A574 100%)' : 'none',
+                  backgroundSize: '200% auto',
+                  WebkitBackgroundClip: i === 4 || i === 5 ? 'text' : 'none',
+                  backgroundClip: i === 4 || i === 5 ? 'text' : 'none',
+                  WebkitTextFillColor: i === 4 || i === 5 ? 'transparent' : 'inherit',
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
           </motion.h2>
           <motion.p 
             className="text-white/70 text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
             At <motion.span 
               className="text-gold"

@@ -48,13 +48,65 @@ export function HowWeWork() {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <span className="text-gold tracking-wider text-sm mb-4 block">HOW WE WORK</span>
-          <h2 className="text-white mb-6">
-            Simple, Transparent Process
-          </h2>
-          <p className="text-white/70 text-lg">
-            From initial consultation to launch, we make the journey smooth and stress-free. Typical delivery: <span className="text-gold">2-4 weeks</span>.
-          </p>
+          <motion.span 
+            className="text-gold tracking-wider text-sm mb-4 block"
+            initial={{ opacity: 0, y: -50, scale: 0.5 }}
+            animate={inView ? { 
+              opacity: 1,
+              y: 0,
+              scale: 1
+            } : {}}
+            transition={{
+              duration: 0.6,
+              type: "spring",
+              bounce: 0.5
+            }}
+          >
+            HOW WE WORK
+          </motion.span>
+          <motion.h2 
+            className="text-white mb-6"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+          >
+            {["Simple,", "Transparent", "Process"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="inline-block mr-3"
+                initial={{ opacity: 0, x: i % 2 === 0 ? -100 : 100, rotate: i % 2 === 0 ? -20 : 20 }}
+                animate={inView ? { 
+                  opacity: 1, 
+                  x: 0,
+                  rotate: 0
+                } : {}}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: 0.2 + i * 0.1,
+                  type: "spring",
+                  stiffness: 120
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.h2>
+          <motion.p 
+            className="text-white/70 text-lg"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            From initial consultation to launch, we make the journey smooth and stress-free. Typical delivery: <motion.span 
+              className="text-gold"
+              animate={{
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity
+              }}
+            >2-4 weeks</motion.span>.
+          </motion.p>
         </motion.div>
 
         <div className="relative max-w-5xl mx-auto">

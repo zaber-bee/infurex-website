@@ -21,6 +21,7 @@ export function Navigation() {
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
+    { name: 'Pricing', href: '#pricing' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'Testimonials', href: '#testimonials' },
     { name: 'Contact', href: '#contact' },
@@ -53,8 +54,7 @@ export function Navigation() {
                 <img 
                   src={infurexLogo} 
                   alt="Infurex Logo" 
-                  className="w-10 h-10 object-contain"
-                  style={{ mixBlendMode: 'lighten' }}
+                  className="w-10 h-10 object-contain mix-blend-lighten"
                 />
                 <span className="text-xl text-white tracking-wider">INFUREX</span>
               </div>

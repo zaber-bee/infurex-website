@@ -137,42 +137,57 @@ export function Services() {
         >
           <motion.span 
             className="text-gold tracking-wider text-sm mb-4 block"
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0, rotate: 180 }}
             animate={inView ? { 
-              opacity: [0.7, 1, 0.7],
-              scale: 1 
+              opacity: 1,
+              scale: 1,
+              rotate: 0
             } : {}}
             transition={{
-              opacity: { duration: 3, repeat: Infinity },
-              scale: { duration: 0.5 }
+              duration: 0.7,
+              type: "spring",
+              stiffness: 200
             }}
           >
             OUR SERVICES
           </motion.span>
           <motion.h2 
             className="text-white mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.span
-              animate={inView ? {
-                textShadow: [
-                  '0 0 20px rgba(212, 175, 55, 0)',
-                  '0 0 20px rgba(212, 175, 55, 0.3)',
-                  '0 0 20px rgba(212, 175, 55, 0)',
-                ]
-              } : {}}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              Everything You Need to Dominate Your Market
-            </motion.span>
+            {/* Split text animation */}
+            {["Everything", "You", "Need", "to", "Dominate", "Your", "Market"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="inline-block mr-3"
+                initial={{ opacity: 0, scale: 0, filter: "blur(10px)" }}
+                animate={inView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                  filter: "blur(0px)"
+                } : {}}
+                transition={{ 
+                  duration: 0.4, 
+                  delay: 0.2 + i * 0.06,
+                  type: "spring"
+                }}
+                whileHover={{ 
+                  scale: 1.1,
+                  color: "#D4A574",
+                  transition: { duration: 0.2 }
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
           </motion.h2>
           <motion.p 
             className="text-white/70 text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, y: 30, rotateX: -90 }}
+            animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.7, type: "spring" }}
           >
             From stunning designs to powerful SEO, we provide complete digital solutions for ambitious real estate agents.
           </motion.p>

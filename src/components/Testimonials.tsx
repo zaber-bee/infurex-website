@@ -73,13 +73,57 @@ export function Testimonials() {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <span className="text-gold tracking-wider text-sm mb-4 block">TESTIMONIALS</span>
-          <h2 className="text-white mb-6">
-            Loved by Real Estate Professionals
-          </h2>
-          <p className="text-white/70 text-lg">
+          <motion.span 
+            className="text-gold tracking-wider text-sm mb-4 block"
+            initial={{ opacity: 0, letterSpacing: "1em" }}
+            animate={inView ? { 
+              opacity: 1,
+              letterSpacing: "0.2em"
+            } : {}}
+            transition={{
+              duration: 0.8,
+              ease: "easeOut"
+            }}
+          >
+            TESTIMONIALS
+          </motion.span>
+          <motion.h2 
+            className="text-white mb-6"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+          >
+            {["Loved", "by", "Real", "Estate", "Professionals"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="inline-block mr-3"
+                initial={{ opacity: 0, rotateY: 90, scale: 0 }}
+                animate={inView ? { 
+                  opacity: 1, 
+                  rotateY: 0,
+                  scale: 1
+                } : {}}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: 0.1 + i * 0.08,
+                  type: "spring",
+                  stiffness: 150
+                }}
+                style={{
+                  transformStyle: "preserve-3d"
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.h2>
+          <motion.p 
+            className="text-white/70 text-lg"
+            initial={{ opacity: 0, y: 20, filter: "blur(5px)" }}
+            animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.7, delay: 0.6 }}
+          >
             Don't just take our word for it. Here's what our clients have to say about working with Infurex.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Carousel */}

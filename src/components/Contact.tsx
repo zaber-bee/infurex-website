@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Mail, Phone, MapPin, Calendar, Upload, X } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
 
+// Declare emailjs as a global variable from the CDN script
+declare const emailjs: any;
+
 export function Contact() {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -32,23 +35,71 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // Check if emailjs is loaded
+      if (typeof emailjs === 'undefined') {
+        throw new Error('EmailJS not loaded');
+      }
+
+      // Initialize EmailJS with public key
+      emailjs.init('rSA0KPYLisZtA9Qbp');
+
+      // Prepare template parameters matching your EmailJS template variables
+      const templateParams = {
+        full_name: formData.name,
+        email_address: formData.email,
+        phone: formData.phone || 'Not provided',
+        company: formData.company || 'Not provided',
+        project_type: formData.projectType,
+        budget: formData.budget || 'Not specified',
+        project_details: formData.message,
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        'service_21npmzu',    // Your service ID
+        'template_5zbmsye',   // Your template ID
+        templateParams
+      );
+      
+      toast.success("Thanks! Your inquiry has been sent. We'll reply within 1 business day.");
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        projectType: '',
+        budget: '',
+        message: '',
+      });
+      setUploadedFiles([]);
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      
+      // Fallback to mailto if EmailJS fails
+      const subject = `New Project Inquiry from ${formData.name}`;
+      const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+Company: ${formData.company || 'Not provided'}
+Project Type: ${formData.projectType}
+Budget: ${formData.budget || 'Not specified'}
+
+Message:
+${formData.message}
+
+${uploadedFiles.length > 0 ? `Attachments: ${uploadedFiles.map(f => f.name).join(', ')}` : ''}
+      `.trim();
+
+      const mailtoLink = `mailto:infurexmarketing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+      toast.success("Opening your email client to complete your inquiry.");
+    }
     
-    toast.success("Thanks! We'll review your inquiry and reply within 1 business day.");
     setIsSubmitting(false);
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      projectType: '',
-      budget: '',
-      message: '',
-    });
-    setUploadedFiles([]);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -137,13 +188,59 @@ export function Contact() {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <span className="text-gold tracking-wider text-sm mb-4 block">GET IN TOUCH</span>
-          <h2 className="text-white mb-6">
-            Ready to Elevate Your Real Estate Brand?
-          </h2>
-          <p className="text-white/70 text-lg">
+          <motion.span 
+            className="text-gold tracking-wider text-sm mb-4 block"
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={inView ? { 
+              opacity: 1,
+              scaleX: 1
+            } : {}}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+          >
+            GET IN TOUCH
+          </motion.span>
+          <motion.h2 
+            className="text-white mb-6"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+          >
+            {["Ready", "to", "Elevate", "Your", "Real", "Estate", "Brand?"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="inline-block mr-3"
+                initial={{ opacity: 0, y: 100, rotateZ: 45 }}
+                animate={inView ? { 
+                  opacity: 1, 
+                  y: 0,
+                  rotateZ: 0
+                } : {}}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: 0.1 + i * 0.07,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  color: "#D4A574",
+                  transition: { duration: 0.2 }
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.h2>
+          <motion.p 
+            className="text-white/70 text-lg"
+            initial={{ opacity: 0, scale: 1.5, filter: "blur(20px)" }}
+            animate={inView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.9, delay: 0.6 }}
+          >
             Let's discuss your project and create a website that drives results. Fill out the form or book a call directly.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
@@ -344,14 +441,21 @@ export function Contact() {
                 Figma Make is not intended for collecting PII or securing sensitive data.
               </p>
 
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gold hover:bg-gold-dark text-black transition-all duration-300"
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="flex flex-col sm:flex-row gap-4"
               >
-                {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
-              </Button>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gold hover:bg-gold-dark text-black transition-all duration-300 touch-manipulation min-h-[44px]"
+                >
+                  {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
+                </Button>
+              </motion.div>
             </form>
           </motion.div>
 

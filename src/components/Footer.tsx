@@ -30,8 +30,8 @@ export function Footer() {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61572375227568', label: 'Facebook' },
     { icon: Instagram, href: 'https://www.instagram.com/_infurex._.marketing/', label: 'Instagram' },
+    { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61572375227568', label: 'Facebook' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/jaber-hossain-297233372/', label: 'LinkedIn' },
   ];
 
@@ -66,8 +66,7 @@ export function Footer() {
               <img 
                 src={infurexLogo} 
                 alt="Infurex Logo" 
-                className="w-10 h-10 object-contain"
-                style={{ mixBlendMode: 'lighten' }}
+                className="w-10 h-10 object-contain mix-blend-lighten"
               />
               <span className="text-xl text-white tracking-wider">INFUREX</span>
             </div>

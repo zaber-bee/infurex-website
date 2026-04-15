@@ -309,13 +309,14 @@ export function Hero() {
                         src="https://images.unsplash.com/photo-1756342613984-75154edc49b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZWFsJTIwZXN0YXRlJTIwd2Vic2l0ZXxlbnwxfHx8fDE3NjI5MzYwNDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
                         alt="Luxury real estate website showcase"
                         className="w-full h-full object-cover"
+                        loading="eager"
                       />
                       {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                       
-                      {/* Animated Scan Line */}
+                      {/* Animated Scan Line - hide on mobile for performance */}
                       <motion.div
-                        className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent"
+                        className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent hidden lg:block"
                         animate={{ y: [0, 300] }}
                         transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                       />

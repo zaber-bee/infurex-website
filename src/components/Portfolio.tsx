@@ -77,13 +77,55 @@ export function Portfolio({ onViewCase }: PortfolioProps) {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center mb-12"
         >
-          <span className="text-gold tracking-wider text-sm mb-4 block">PORTFOLIO</span>
-          <h2 className="text-white mb-6">
-            Websites That Convert & Impress
-          </h2>
-          <p className="text-white/70 text-lg">
+          <motion.span 
+            className="text-gold tracking-wider text-sm mb-4 block"
+            initial={{ opacity: 0, y: -30, skewX: 20 }}
+            animate={inView ? { 
+              opacity: 1,
+              y: 0,
+              skewX: 0
+            } : {}}
+            transition={{
+              duration: 0.7,
+              type: "spring"
+            }}
+          >
+            PORTFOLIO
+          </motion.span>
+          <motion.h2 
+            className="text-white mb-6"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+          >
+            {["Websites", "That", "Convert", "&", "Impress"].map((word, i) => (
+              <motion.span
+                key={i}
+                className="inline-block mr-3"
+                initial={{ opacity: 0, scale: 2, rotate: 180 }}
+                animate={inView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                  rotate: 0
+                } : {}}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: 0.1 + i * 0.06,
+                  type: "spring",
+                  stiffness: 80
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.h2>
+          <motion.p 
+            className="text-white/70 text-lg"
+            initial={{ opacity: 0, x: -100, skewX: -20 }}
+            animate={inView ? { opacity: 1, x: 0, skewX: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.5 }}
+          >
             Explore our recent work and see how we've helped real estate agents stand out and succeed.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Filter Buttons */}
@@ -155,7 +197,7 @@ export function Portfolio({ onViewCase }: PortfolioProps) {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-12 text-center text-white/60 text-sm"
         >
-          Click any project to view the full case study
+          Click any project to view the full website demo
         </motion.div>
       </div>
     </section>

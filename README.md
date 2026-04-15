@@ -1,7 +1,7 @@
 
-  # Infurex Website Design (Community)
+  # Infurex Website Design
 
-  This is a code bundle for Infurex Website Design (Community). The original project is available at https://www.figma.com/design/rXyNbsEzhCrDkbQqbctObS/Infurex-Website-Design--Community-.
+  This is a code bundle for Infurex Website Design. The original project is available at https://www.figma.com/design/56uunb4ICtJwuR2hvaPC9l/Infurex-Website-Design.
 
   ## Running the code
 
