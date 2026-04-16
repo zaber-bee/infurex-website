@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
+import emailjs from '@emailjs/browser';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -28,29 +29,32 @@ export function Contact() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  try {
+    await emailjs.send(
+      'service_21npmzu',
+      'template_5zbmsye',
+      {
+        full_name: formData.name,
+        email_address: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        project_type: formData.projectType,
+        budget: formData.budget,
+        project_details: formData.message,
+      },
+      'rSA0KPYLisZtA9Qbp'
+    );
     toast.success("Thanks! We'll review your inquiry and reply within 1 business day.");
-    setIsSubmitting(false);
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      projectType: '',
-      budget: '',
-      message: '',
-    });
+    setFormData({ name: '', email: '', phone: '', company: '', projectType: '', budget: '', message: '' });
     setUploadedFiles([]);
-  };
-
+  } catch (error) {
+    toast.error('Something went wrong. Please try again.');
+  }
+  setIsSubmitting(false);
+};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
