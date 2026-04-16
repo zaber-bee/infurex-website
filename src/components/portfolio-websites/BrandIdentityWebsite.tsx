@@ -148,7 +148,7 @@ export function BrandIdentityWebsite({ onRequestWebsite }: BrandIdentityWebsiteP
             {[
               {
                 title: 'For Buyers',
-                desc: 'From first-time buyers to seasoned investors, I'll help you find and secure the perfect property.',
+               desc: "From first-time buyers to seasoned investors, I'll help you find and secure the perfect property.",
                 features: ['Market Analysis', 'Property Tours', 'Negotiation Support', 'Closing Assistance'],
               },
               {
